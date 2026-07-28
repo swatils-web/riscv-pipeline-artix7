@@ -1,5 +1,6 @@
 # Low-Power 32-Bit RISC-V Processor (Artix-7)
 
+
 ## 📖 Overview
 This project implements a **5-stage pipelined RISC-V processor** optimized for **low power** and **timing closure** on Xilinx Artix-7 FPGA.  
 It demonstrates how careful micro-architectural choices (branch resolution in EX stage, operand isolation, NOP masking) can deliver both performance and energy efficiency.
