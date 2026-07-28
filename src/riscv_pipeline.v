@@ -7,7 +7,7 @@ module riscv_top #(
     input rst,
     output [31:0] wb_data,
 
-    // ---------------- Debug / verification outputs ----------------
+    //  Debug / verification outputs
     output [31:0] dbg_if_id_PC,
     output [31:0] dbg_if_id_instruction,
     output [31:0] dbg_id_ex_PC,
@@ -49,9 +49,7 @@ module riscv_top #(
 
     localparam NOP = 32'h00000013;
 
-    // ------------------------------------------------------------------
     // IF stage
-    // ------------------------------------------------------------------
     reg  [31:0] PC;
     wire [31:0] PC_plus4;
     wire [31:0] PC_next;
@@ -67,9 +65,8 @@ module riscv_top #(
     reg [31:0] if_id_PC;
     reg [31:0] if_id_instruction;
 
-    // ------------------------------------------------------------------
+    
     // ID stage
-    // ------------------------------------------------------------------
     wire [4:0] id_rs1;
     wire [4:0] id_rs2;
     wire [4:0] id_rd;
@@ -98,9 +95,7 @@ module riscv_top #(
 
     wire [31:0] id_branch_target;
 
-    // ------------------------------------------------------------------
     // ID/EX pipeline register
-    // ------------------------------------------------------------------
     reg [31:0] id_ex_PC;
     reg [31:0] id_ex_reg_data1;
     reg [31:0] id_ex_reg_data2;
@@ -120,9 +115,7 @@ module riscv_top #(
     reg id_ex_MemtoReg;
     reg id_ex_Branch;
 
-    // ------------------------------------------------------------------
     // EX stage
-    // ------------------------------------------------------------------
     wire [1:0] ForwardA;
     wire [1:0] ForwardB;
 
@@ -140,9 +133,7 @@ module riscv_top #(
     wire        ex_alu_active;
     wire        ex_branch_taken_calc;
 
-    // ------------------------------------------------------------------
     // EX/MEM pipeline register
-    // ------------------------------------------------------------------
     reg [31:0] ex_mem_alu_result;
     reg [31:0] ex_mem_reg_data2;
     reg [31:0] ex_mem_branch_target;
@@ -155,9 +146,7 @@ module riscv_top #(
     reg ex_mem_MemtoReg;
     reg ex_mem_branch_taken;
 
-    // ------------------------------------------------------------------
     // MEM/WB pipeline register
-    // ------------------------------------------------------------------
     wire [31:0] mem_read_data;
 
     reg [31:0] mem_wb_alu_result;
@@ -168,18 +157,14 @@ module riscv_top #(
     reg mem_wb_RegWrite;
     reg mem_wb_MemtoReg;
 
-    // ------------------------------------------------------------------
     // WB stage
-    // ------------------------------------------------------------------
     wire [31:0] wb_write_back_data;
 
     // Hazard signals
     wire stall;
     wire flush;
 
-    // =========================================================================
     // 1. INSTRUCTION FETCH
-    // =========================================================================
     assign PC_plus4 = PC + 32'd4;
 
     // Branch has priority over stall.
@@ -225,9 +210,7 @@ module riscv_top #(
         end
     end
 
-    // =========================================================================
     // 2. INSTRUCTION DECODE
-    // =========================================================================
     assign id_rs1 = if_id_instruction[19:15];
     assign id_rs2 = if_id_instruction[24:20];
     assign id_rd  = if_id_instruction[11:7];
@@ -323,9 +306,7 @@ module riscv_top #(
         end
     end
 
-    // =========================================================================
     // 3. EXECUTE
-    // =========================================================================
 
     // Forwarding.
     assign ForwardA =
@@ -403,9 +384,7 @@ module riscv_top #(
         end
     end
 
-    // =========================================================================
     // 4. MEMORY
-    // =========================================================================
     wire        dmem_active;
     wire [31:0] dmem_addr_iso;
     wire [31:0] dmem_wdata_iso;
@@ -440,15 +419,11 @@ module riscv_top #(
         end
     end
 
-    // =========================================================================
     // 5. WRITE BACK
-    // =========================================================================
     assign wb_write_back_data = mem_wb_MemtoReg ? mem_wb_read_data : mem_wb_alu_result;
     assign wb_data            = wb_write_back_data;
 
-    // =========================================================================
     // Debug outputs
-    // =========================================================================
     generate
         if (DEBUG_EN) begin : GEN_DEBUG_ON
             assign dbg_if_id_PC          = if_id_PC;
@@ -534,9 +509,7 @@ module riscv_top #(
 endmodule
 
 
-// =========================================================================
 // INSTRUCTION MEMORY
-// =========================================================================
 module instruction_mem(
     input  [31:0] addr,
     output [31:0] instruction
@@ -567,9 +540,7 @@ module instruction_mem(
 endmodule
 
 
-// =========================================================================
 // CONTROL UNIT
-// =========================================================================
 module control_unit(
     input  [6:0] opcode,
     input  [2:0] funct3,
@@ -656,9 +627,7 @@ module control_unit(
 endmodule
 
 
-// =========================================================================
 // REGISTER FILE
-// =========================================================================
 module register_file(
     input clk,
     input  [4:0]  rs1,
@@ -697,9 +666,7 @@ module register_file(
 endmodule
 
 
-// =========================================================================
 // IMMEDIATE GENERATOR
-// =========================================================================
 module imm_gen(
     input  [31:0] instr,
     output reg [31:0] imm
@@ -730,9 +697,7 @@ module imm_gen(
 endmodule
 
 
-// =========================================================================
 // ALU
-// =========================================================================
 module alu(
     input  [31:0] A,
     input  [31:0] B,
@@ -760,9 +725,7 @@ module alu(
 endmodule
 
 
-// =========================================================================
 // DATA MEMORY
-// =========================================================================
 module data_mem(
     input clk,
     input mem_read,
