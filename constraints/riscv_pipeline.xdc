@@ -1,5 +1,5 @@
 
-# Clock Constraints
+#  Clock Constraints
 create_clock -period 10.000 [get_ports clk]   ;# 100 MHz system clock
 # Input/Output Delays (optional, if external interfaces exist)
 # set_input_delay 2.0 -clock [get_clocks clk] [get_ports data_in]
