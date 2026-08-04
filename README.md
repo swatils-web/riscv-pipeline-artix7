@@ -1,37 +1,37 @@
 # Low-Power 32-Bit RISC-V Processor (Artix-7)
 
 
-## 📖 Overview
+Overview
 This project implements a **5-stage pipelined RISC-V processor** optimized for **low power** and **timing closure** on Xilinx Artix-7 FPGA.  
 It demonstrates how careful micro-architectural choices (branch resolution in EX stage, operand isolation, NOP masking) can deliver both performance and energy efficiency.
 
-## ⚙️ Features
+Features
 - 5-stage pipeline (IF, ID, EX, MEM, WB)
 - Hazard detection and forwarding
 - Branch resolution in EX stage
 - Operand isolation and NOP masking for reduced dynamic switching
 - Verified at **100 MHz** with clean timing closure
 
-## ⏱ Timing Results
+Timing Results
 - Worst Negative Slack (WNS): **+0.765 ns**  
 - Total Negative Slack (TNS): **0.000 ns**  
 - Worst Hold Slack (WHS): **+0.109 ns**  
 - Pulse Width Slack (WPWS): **+3.750 ns**  
 - ✅ All user-specified timing constraints met
 
-## 🔋 Power Results
+Power Results
 - **Total Power:** ~0.18 W  
 - **Dynamic:** 0.113 W (62%)  
 - **Static:** 0.070 W (38%)  
 - Core logic + BRAM consumption negligible; I/O dominates during debug (expected)
 
-## 🧪 Verification
+Verification
 - Automated testbench passed ✅  
 - Registers: x1=10, x2=5, x3=15, x4=15, x5=15  
 - Memory[0]=15 → matches expected program behavior  
 - Simulation log: **TEST PASS after 40 cycles**
 
-## 📂 Repository Structure
+Repository Structure
 riscv-pipeline/
 │
 ├── src/                # Verilog source files (riscv_pipeline.v, alu.v, etc.)
@@ -49,7 +49,7 @@ riscv-pipeline/
 
 Code
 
-## 🖼 Diagrams
+Diagrams
 Architecture overview:  
 ![Architecture](docs/RISC-5object.jpg)
 
@@ -67,9 +67,9 @@ Timing summary:
 
 Waveforms:  
 ![Waveform](docs/RISC-5waveform.jpg)  
-![Waveform 2](docs/RISC-5waveform1.jpg)
+![Waveform 2](docs/RISC-5waveform1.jp
 
-## 📑 Constraints
+Constraints
 ```tcl
 # Primary system clock at 100 MHz
 create_clock -period 10.000 [get_ports clk]
